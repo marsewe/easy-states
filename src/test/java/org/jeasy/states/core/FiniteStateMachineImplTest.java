@@ -44,7 +44,7 @@ import static org.mockito.Mockito.doThrow;
 @RunWith(MockitoJUnitRunner.class)
 public class FiniteStateMachineImplTest {
 
-    private State s1, s2;
+    private State s1, s2, s3;
     @Mock
     private EventHandler<MoveEvent> eventHandler;
     private FiniteStateMachineImpl stateMachine;
@@ -53,9 +53,11 @@ public class FiniteStateMachineImplTest {
     public void setUp() {
         s1 = new State("s1");
         s2 = new State("s2");
+        s3 = new State("s3");
         Set<State> states = new HashSet<>();
         states.add(s1);
         states.add(s2);
+        states.add(s3);
         stateMachine = new FiniteStateMachineImpl(states, s1);
     }
 
@@ -154,6 +156,33 @@ public class FiniteStateMachineImplTest {
 
         // Then
         Assertions.assertThat(stateMachine.getCurrentState()).isEqualTo(s1);
+    }
+
+    @Test
+    public void getNextStatesShouldReturnReachableStates() {
+        Transition transition1 = new TransitionBuilder()
+                .sourceState(s1)
+                .targetState(s2)
+                .eventType(MoveEvent.class)
+                .eventHandler(eventHandler)
+                .build();
+        stateMachine.registerTransition(transition1);
+        Transition transition2 = new TransitionBuilder()
+                .sourceState(s1)
+                .targetState(s1)
+                .eventType(StayEvent.class)
+                .eventHandler(eventHandler)
+                .build();
+        stateMachine.registerTransition(transition2);
+        Transition transition3 = new TransitionBuilder()
+                .sourceState(s2)
+                .targetState(s3)
+                .eventType(MoveEvent.class)
+                .eventHandler(eventHandler)
+                .build();
+        stateMachine.registerTransition(transition3);
+
+        Assertions.assertThat(stateMachine.getNextStates().equals(Set.of(s1, s2)));
     }
 
     private static class MoveEvent extends AbstractEvent { }

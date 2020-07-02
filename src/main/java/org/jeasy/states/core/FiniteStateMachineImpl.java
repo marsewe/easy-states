@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 final class FiniteStateMachineImpl implements FiniteStateMachine {
 
@@ -125,6 +126,17 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
     @Override
     public Set<State> getFinalStates() {
         return finalStates;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<State> getNextStates() {
+        return transitions.stream()
+                .filter(it -> it.getSourceState().equals(getCurrentState()))
+                .map(Transition::getTargetState)
+                .collect(Collectors.toSet());
     }
 
     /**

@@ -51,6 +51,12 @@ public interface FiniteStateMachine {
     Set<State> getFinalStates();
 
     /**
+     * Return FSM possible next states.
+     * @return possible next states.
+     */
+    Set<State> getNextStates();
+
+    /**
      * Return FSM registered states.
      * @return FSM registered states
      */
