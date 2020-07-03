@@ -47,9 +47,9 @@
     </developers>
 
     <scm>
-        <url>git@github.com:j-easy/easy-states.git</url>
-        <connection>scm:git:git@github.com:j-easy/easy-states.git</connection>
-        <developerConnection>scm:git:git@github.com:j-easy/easy-states.git</developerConnection>
+        <url>git@github.com:marsewe/easy-states.git</url>
+        <connection>scm:git:git@github.com:marsewe/easy-states.git</connection>
+        <developerConnection>scm:git:git@github.com:marsewe/easy-states.git</developerConnection>
         <tag>easy-states-2.0.0</tag>
     </scm>
 
