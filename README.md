@@ -68,7 +68,7 @@ If you use maven, add the following dependency to your `pom.xml`:
 </dependency>
 ```
 
-Easy States requires a Java 7+ runtime.
+Easy States requires a Java 11+ runtime.
 
 ## Two minutes tutorial
 
