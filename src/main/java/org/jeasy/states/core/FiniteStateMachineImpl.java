@@ -132,10 +132,21 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
      * {@inheritDoc}
      */
     @Override
-    public Set<State> getNextStates() {
+    public Set<State> getTargetStates() {
         return transitions.stream()
                 .filter(it -> it.getSourceState().equals(getCurrentState()))
                 .map(Transition::getTargetState)
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Class<? extends Event> > getTriggerEvents() {
+        return transitions.stream()
+                .filter(it -> it.getSourceState().equals(getCurrentState()))
+                .map(Transition::getEventType)
                 .collect(Collectors.toSet());
     }
 

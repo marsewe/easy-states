@@ -159,7 +159,7 @@ public class FiniteStateMachineImplTest {
     }
 
     @Test
-    public void getNextStatesShouldReturnReachableStates() {
+    public void getNextStates_thenShouldReturnReachableStates() {
         Transition transition1 = new TransitionBuilder()
                 .sourceState(s1)
                 .targetState(s2)
@@ -182,10 +182,40 @@ public class FiniteStateMachineImplTest {
                 .build();
         stateMachine.registerTransition(transition3);
 
-        Assertions.assertThat(stateMachine.getNextStates().equals(Set.of(s1, s2)));
+        Assertions.assertThat(stateMachine.getTargetStates().equals(Set.of(s1, s2)));
+    }
+
+
+    @Test
+    public void getTriggerEvents_thenShouldReturnEventsForStateTransitions() {
+        Transition transition1 = new TransitionBuilder()
+                .sourceState(s1)
+                .targetState(s2)
+                .eventType(MoveEvent.class)
+                .eventHandler(eventHandler)
+                .build();
+        stateMachine.registerTransition(transition1);
+        Transition transition2 = new TransitionBuilder()
+                .sourceState(s1)
+                .targetState(s1)
+                .eventType(StayEvent.class)
+                .eventHandler(eventHandler)
+                .build();
+        stateMachine.registerTransition(transition2);
+        Transition transition3 = new TransitionBuilder()
+                .sourceState(s2)
+                .targetState(s3)
+                .eventType(WhateverEvent.class)
+                .eventHandler(eventHandler)
+                .build();
+        stateMachine.registerTransition(transition3);
+
+        Assertions.assertThat(stateMachine.getTriggerEvents().equals(Set.of(StayEvent.class, MoveEvent.class)));
     }
 
     private static class MoveEvent extends AbstractEvent { }
 
     private static class StayEvent extends AbstractEvent { }
+
+    private static class WhateverEvent extends AbstractEvent { }
 }
