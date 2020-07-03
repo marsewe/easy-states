@@ -51,6 +51,18 @@ public interface FiniteStateMachine {
     Set<State> getFinalStates();
 
     /**
+     * Return FSM possible next target states.
+     * @return possible next target states.
+     */
+    Set<State> getTargetStates();
+
+    /**
+     * Return FSM events which trigger a state transition from the current state to a target state.
+     * @return events triggering a transition.
+     */
+    public Set<Class<? extends Event> > getTriggerEvents();
+
+    /**
      * Return FSM registered states.
      * @return FSM registered states
      */
