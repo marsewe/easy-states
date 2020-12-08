@@ -88,7 +88,7 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
 
                     break;
                 } catch (Exception e) {
-                    LOGGER.log(Level.SEVERE, "An exception occurred during handling event " + event + " of transition " + transition, e);
+                    LOGGER.log(Level.WARNING, "An exception occurred during handling event " + event + " of transition " + transition, e);
                     throw new FiniteStateMachineException(transition, event, e);
                 }
             }
