@@ -71,9 +71,9 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
         for (Transition transition : transitions) {
             if (
                     currentState.equals(transition.getSourceState()) && //fsm is in the right state as expected by transition definition
-                    transition.getEventType().equals(event.getClass()) && //fired event type is as expected by transition definition
-                    states.contains(transition.getTargetState()) //target state is defined
-                    ) {
+                            transition.getEventType().equals(event.getClass()) && //fired event type is as expected by transition definition
+                            states.contains(transition.getTargetState()) //target state is defined
+            ) {
                 try {
                     //perform action, if any
                     if (transition.getEventHandler() != null) {
@@ -88,7 +88,6 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
 
                     break;
                 } catch (Exception e) {
-                    LOGGER.log(Level.WARNING, "An exception occurred during handling event " + event + " of transition " + transition, e);
                     throw new FiniteStateMachineException(transition, event, e);
                 }
             }
@@ -143,7 +142,7 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
      * {@inheritDoc}
      */
     @Override
-    public Set<Class<? extends Event> > getTriggerEvents() {
+    public Set<Class<? extends Event>> getTriggerEvents() {
         return transitions.stream()
                 .filter(it -> it.getSourceState().equals(getCurrentState()))
                 .map(Transition::getEventType)
